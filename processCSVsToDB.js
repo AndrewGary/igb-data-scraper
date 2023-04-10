@@ -5,7 +5,7 @@ const mariadb = require("mariadb");
 require('dotenv').config();
 
 const readdir = promisify(fs.readdir);
-const readFile = promisify(fs.readFile);
+const readFile = promisify(fs.readFile);z
 
 const pool = mariadb.createPool({
     host: process.env.DB_HOST,
@@ -19,10 +19,13 @@ const uploadDataToDB = async () => {
   const files = await readdir(directoryPath);
   const uploadData = [];
 
+  //Grab the headers from the table columns
   const headerNames = await getTableNames("all_data");
 
+  //Pop the last value from the headerNames array because it is a autoIncrement column/primary key
   headerNames.pop();
 
+  //This for loop is looping through all the files in the dataFiles folder
   for (let i = 0; i < files.length; i++) {
     // for (let i = 0; i < 1; i++) {
     const filePath = directoryPath + files[i];
