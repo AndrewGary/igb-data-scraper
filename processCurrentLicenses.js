@@ -3,20 +3,29 @@ const { promisify } = require("util");
 const mariadb = require("mariadb");
 require("dotenv").config();
 
-const { createConnection } = require("./getDBConnection");
-
-const readdir = promisify(fs.readdir);
-const readFile = promisify(fs.readFile);
+const { createConnection, readCSVFile, getTableNames } = require("./utils");
 
 const processAndUploadToDB = async () => {
-	const connection = await createConnection();
+	const filePath = "./LicensedApplicants.csv";
 
-	const resp = await connection.query("select * from all_data limit 10");
+	const headers = await getTableNames("currentLicenses");
 
-	console.log(resp);
-	// console.log(connection);
+	console.log("headers: ", headers);
+	return;
 
-	await connection.end();
+	// //Pull the rows of data from the .csv file specified above
+	// const rows = await readCSVFile(filePath);
+
+	// try{
+	//     const connection = await createConnection();
+	//     let count = 0;
+	//     for(const row of rows){
+	//         try{
+	//             const result = await connection.query()
+	//         }
+	//     }
+
+	// }
 };
 
 processAndUploadToDB();
