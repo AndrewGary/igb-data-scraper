@@ -5,7 +5,7 @@ const mariadb = require("mariadb");
 require('dotenv').config();
 
 const readdir = promisify(fs.readdir);
-const readFile = promisify(fs.readFile);z
+const readFile = promisify(fs.readFile);
 
 const pool = mariadb.createPool({
     host: process.env.DB_HOST,
