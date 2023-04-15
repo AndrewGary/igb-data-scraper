@@ -35,11 +35,11 @@ const readCSVFile = async (filePath) => {
 			});
 		});
 
-	for (let i = 0; i < rows.length; i++) {
-		if ((rows[i][rows[i].length - 1] = "\r")) {
-			rows[i].pop();
-		}
-	}
+	// for (let i = 0; i < rows.length; i++) {
+	// 	if ((rows[i][rows[i].length - 1] = "\r")) {
+	// 		rows[i].pop();
+	// 	}
+	// }
 
 	return rows;
 };
@@ -56,7 +56,7 @@ const getTableNames = async (tableName) => {
 
 	const columnNamesArray = await connection.query(getTableColumnsQuery);
 
-	console.log(columnNamesArray);
+	// console.log(columnNamesArray);
 	const arrayOfNames = columnNamesArray.map((obj) => {
 		return obj.column_name;
 	});
@@ -66,4 +66,20 @@ const getTableNames = async (tableName) => {
 	return arrayOfNames;
 };
 
-module.exports = { createConnection, readCSVFile, getTableNames };
+const writeArrayToFile = (arr, filename) => {
+	// Convert the array to a JSON string
+	const json = JSON.stringify(arr, null, 2);
+  
+	// Write the JSON string to the file
+	return new Promise((resolve, reject) => {
+	  fs.writeFile(filename, json, (err) => {
+		if (err) {
+		  reject(err);
+		} else {
+		  resolve();
+		}
+	  });
+	});
+  };
+
+module.exports = { createConnection, readCSVFile, getTableNames, writeArrayToFile };
